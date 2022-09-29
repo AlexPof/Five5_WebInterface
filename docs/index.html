@@ -7,21 +7,24 @@
 		font-family: "Segoe UI", sans-serif;
 		text-align: justify;
 	}
-    
+
     h1 {
         font-size: 20px;
         font-weight: bold;
     }
-    
+    .footnotes {
+        font-size: 13px;
+    }
+
 	p {
 	color: rgb(0,0,0,0.8);
 	}
-    
+
     .divseparator {
       background-color: rgb(0,0,0,0.3);
       height:2px;
      }
-    
+
     .mybutton {
       background-color: rgb(100,100,100,1);
       border: none;
@@ -101,17 +104,17 @@
 									}
 	]
 };
-		
+
 		</script>
     </head>
-	
+
     <body>
 	<div style="float:left; width: 15%; background-color:#FFFFFF;">
 		&nbsp;
 	</div>
 	<div style="float:left; width: 70%; background-color:#FFFFFF;">
 		<h1>
-            John Cage's Five<sup>5</sup>: a Javascript-aided Interpretation Interface
+            John Cage's Five<sup>5</sup>: a Javascript-based Interpretation Interface
 		</h1>
         <div class="divseparator">
         </div>
@@ -143,11 +146,11 @@
                     <rect id="selectRect" stroke="rgb(0,0,0,0.8)" fill="rgb(0,0,0,0.05)"/>
                     <circle id="circle_st" r="6" stroke="rgb(0,0,0,0.8)" fill="rgb(48,105,152,0.7)"/>
                     <circle id="circle_et" r="6" stroke="rgb(0,0,0,0.8)" fill="rgb(255, 212, 59,0.7)"/>
-                    
-                    <text id="startLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Starting time period</text>
-                    <text id="endLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Ending time period</text>
-                    <line id="startLine" stroke="rgb(0,0,0,0.8)" fill="none"/>
-                    <line id="endLine" stroke="rgb(0,0,0,0.8)" fill="none"/>
+
+                    <text id="startLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Starting time interval</text>
+                    <text id="endLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Ending time interval</text>
+                    <line id="startLine" stroke="rgb(0,0,0,0.8)" fill="none"/></line>
+                    <line id="endLine" stroke="rgb(0,0,0,0.8)" fill="none"/></line>
                     <path id="startTimeFunc"></path>
                     <path id="endTimeFunc"></path>
                 </svg>
@@ -162,32 +165,164 @@
             </div>
         </div>
 		</p>
-		<p>
-		It would be very convenient if the individual neurons of artificial neural networks corresponded to cleanly interpretable features of the input. For example, in an “ideal” ImageNet classifier, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout. Empirically, in models we have studied, some of the neurons do cleanly map to features. But it isn't always the case that features correspond so cleanly to neurons, especially in large language models where it actually seems rare for neurons to correspond to clean features. This brings up many questions. Why is it that neurons sometimes align with features and sometimes don't? Why do some models and tasks have many of these clean neurons, while they're vanishingly rare in others?
-		</p>
+    <h1>
+      Instructions
+    </h1>
+    <p style="font-size:14px; line-height: 1.2em;">
+      The two colored circles control the gaussian probability distributions of starting/ending times in the starting/ending time intervals of a given
+      time-bracket. The mean of the gaussian is controlled horizontally, whereas its standard deviation is controlled vertically (note that when the standard
+      deviation is low enough, the gaussian distribution is indistinguishable from a uniform one).
+      Pressing 'Generate score' will draw starting and ending times for each time-bracket according to the defined probability distributions.
+      Press play to listen to this generated realization of Five<sup>5</sup>.
+      For more information about John Cage's Number Pieces, please read below.
+    </p>
+    <br>
+    <h1>
+      John Cage's Number Pieces
+    </h1>
+        <div class="divseparator"></div>
+    		<p>
+          From 1987 to 1992, John Cage wrote a series of scores named the <i>"Number Pieces"</i> which
+           represent his vision of an ''anarchic harmony''. The Number Pieces are easily recognizable by their title,
+             which generally includes a written number and a superscript: for example <i>One<sup>5</sup></i> or <i>Seven<sup>2</sup></i>.
+             The notion of ''anarchic harmony'' is best described by Cage himself:
+           <i>''I now think the simple togetherness of art - I mean of sounds - produces harmony.
+             That harmony means that there are several sounds...being noticed at the same time, hmm?"</i><sup><a href="#footnotes">(1)</a></sup>.
+            To this end, Cage used in almost all the Number Pieces (except for example <i>One<sup>3</sup></i> and <i>Two</i>)
+            a particular time-structure, called "time-bracket", for determining the temporal location of sounds.
+        </p>
+        <p>
+        A usual time-bracket is made of three parts : a fragment of one or many staves, lying under two time intervals,
+        one on the left and one on the right. The time intervals consist of two real-time values separated by a
+        two-way arrow (fixed time-brackets, wherein the time intervals are replaced with single real-time values,
+        may also be found in the Number Pieces}. The staves contain one or more sound events
+        without any duration indications. A typical time-bracket is shown below.
+        </p>
+        <br>
+        <center>
+        <img src="numberpieces.jpg">
+        </center>
+        <br>
+        <p>
+          In the interface above, we represent a time-bracket schematically with two colored polygons, the oblique line representing
+          the internal overlap between the starting time interval and the ending time interval, as shown below.
+        </p>
+        <br>
+        <center>
+          <svg width="550" height="100">
+            <text x="80" y="10" style="stroke:rgb(48,105,152);opacity:0.7;font-size:12px;">Starting time interval</text>
+            <text x="370" y="45" style="stroke:rgb(255, 212, 59);opacity:0.7;font-size:12px;">Ending time interval</text>
+            <line x1="150" x2="330" y1="20" y2="20" style="stroke:rgb(48,105,152); stroke-width:2;"></line>
+            <line x1="230" x2="400" y1="30" y2="30" style="stroke:rgb(255, 212, 59); stroke-width:2;"></line>
+            <polygon points="150,60 330,60 230,85 150,85" style="fill:rgb(48, 105, 152); fill-opacity:0.3; stroke: gray;"></polygon>
+            <polygon points="230,85 400,85 400,60 330,60" style="fill:rgb(255, 212, 59); fill-opacity:0.3; stroke: gray;"></polygon>
+        </svg>
+        </center>
+        <br>
+        <p>
+	         The duration of the sound indicated in a time-bracket is left free to the performer,
+           provided its beginning occurs within the first time interval on the left, and its end occurs
+           within the second one on the right. Successive time-brackets can occur in a Number Piece with possible
+           overlaps between each other, i.e. the ending time interval of one time-bracket may overlap the starting time
+           interval of the next one.
+           In a Number Piece with multiple performers, the superposition of the various parts, each containing time-brackets,
+           creates an ever changing polyphonic landscape. Cage's vision of an anarchic harmony shows itself in these highly
+           indeterminate works, through the individual freedom granted to each musician and the many sonic possibilities
+           offered by the time-bracket system.
+		    </p>
+        <h1>
+          Five<sup>5</sup>
+        </h1>
+        <div class="divseparator"></div>
+        <p>
+          Five<sup>5</sup> is a Number Pieces for flute, two clarinets, bass clarinet, and percussion, composed in 1991 and dedicated to Thomas Nee.
+          As Cage himself instructs: <i>''Single tones are to be played only once (in flexible time-brackets) short or long or medium in
+          length. When the tone has length, play softly. Very short sounds can be of any amplitude.
+          The percussion instruments are numbered but not specified. Sounds, if long, must sound throughout their duration not as though
+          repeatedly struck, but as though sounding continuously.''</i><sup><a href="#footnotes">(2)</a></sup>
+        </p>
+        <p>
+          In the version presented here, the percussion instruments consists in five different cymbals (four ride cymbals and a crash cymbal), played as a
+          soft continuous roll.
+        </p>
+        <h1>
+          Algorithmic approaches in the analysis and interpretation of the Number Pieces
+        </h1>
+        <div class="divseparator"></div>
+        <p>
+          As noticed by previous authors</i><sup><a href="#footnotes">(3,4,5)</a></sup>, the superposition of different voices
+          each performing time-brackets creates a polyphonic landscape in constant evolution and renders the analysis of the Number Pieces quite challenging.
+          Taking the specific example of <i>Five<sup>2</sup></i>, Haskins notes that <i>''(...) coping with the myriad possibilities
+          of pitch combinations - partially ordered subsets - within each time-bracket of <i>Five<sup>2</sup></i> remains an important issue''.</i>
+          Furthermore, Haskins reminds that <i>''(one should not) valorize a single analysis, because
+          the brackets offer a flexibility that creates many possibilities.''</i>
+        </p>
+        <p>
+          In recent work<sup><a href="#footnotes">(6,7)</a></sup>, we have advocated a statistical approach for the study of
+          the Number Pieces, which allows one to deal with the entire possibilities offered in terms of starting and ending times in the different time-brackets
+          by considering them as random variables.
+          More precisely, we fix a probability distribution for starting times in a given starting time period (the left time interval), and similarly
+          for ending times in a given ending time period. By drawing all starting and ending times, a realization of the Number Piece is determined.
+          By averaging over a sufficiently large number of realizations, the desired statistical properties can be found.
+          This approach has been applied<sup><a href="#footnotes">(7)</a></sup> to the statistical study of pitch-class sets in Five<sup>5</sup>, and
+          also by other authors<sup><a href="#footnotes">(8)</a></sup> in the case of Four<sup>2</sup>.
+        </p>
+        <p>
+          The same principle has been applied for the realization and interpretation of the Number Pieces<sup><a href="#footnotes">(9,10)</a></sup>.
+          These interfaces run on specific software, for example the MAX/MSP graphic programming environment. To our knowledge, the present page is the first
+          entirely web-based interface for the interpretation of John Cage's Number Pieces. The interfaces leverages HTML DOM manipulation using <a href="https://d3js.org/">d3.js</a>
+          for interactive graphics, and <a href="https://surikov.github.io/webaudiofont/">WebAudioFont</a> for sample-based synthesis.
+        </p>
+        <h1>
+          Notes
+        </h1>
+        <div class="divseparator"></div>
+    <p class="footnotes" id="footnotes">
+		1. Cage, John and Retallack, Joan. 1996. <i>Musicage: Cage Muses on Words, Art, Music</i>. Hanover and London: University Press of New England/Wesleyan University Press: 108.
+		<br>
+    2. See also the complete catalogue of John Cage's works, <a href="https://johncage.org/pp/John-Cage-Work-Detail.cfm?work_ID=77">Available here</a>
+    <br>
+    3. Weisser, Benedict. 1998. <i>Notational Practice in Contemporary Music: A Critique of Three Compositional Models (Luciano Berio, John Cage and Brian Ferneyrough).</i> Ph.D. dissertation, City University of New York.
+    <br>
+    4. Weisser, Benedict. 2003. <i>John Cage: '... The Whole Paper Would Potentially Be Sound': Time-Brackets and The Number Pieces (1981-92).</i> Perspectives of New Music, 41(2), pp. 176-225.<a href="https://www.jstor.org/stable/25164529">Available here.</a>
+    <br>
+    5. Haskins, Rob. 2004. <i>An Anarchic Society of Sounds: The Number Pieces of John Cage.</i> Ph.D. dissertation, University of Rochester, New York.
+    <br>
+    6. Popoff, Alexandre. 2010. <i>John Cage’s Number Pieces: The Meta-Structure of Time-Brackets and the Notion of Time".</i> Perspectives of New Music, pp. 65–84, 48/1. <a href="https://www.jstor.org/stable/23076408">Available here.</a>
+    <br>
+    7. Popoff, Alexandre. 2015. <i>A Statistical Approach to the Global Structure of John Cage’s Number Piece Five5.</i> Springer Lecture Notes in Artificial Intelligence, Volume 9110 LNAI, pp. 231–236. <a href="https://doi.org/10.1007/978-3-319-20603-5_24">Available here.</a>
+    <br>
+    8. Andersen, Drake. 2017. <i>“What can they have to do with one another?”: Approaches to Analysis and Performance in John Cage’s Four<sup>2</sup>.</i> Music Theory Online, Volume 23, Number 4, December 2017. <a href="https://mtosmt.org/issues/mto.17.23.4/mto.17.23.4.andersen.html">Available here.</a>
+    <br>
+    9. Sluchin, Benny and Malt, Mikhail. 2012. <i>A computer aided interpretation interface for John Cage's Number Piece Two<sup>5</sup>.</i> Journ&eacute;es d'Informatique Musicale, 2012, Mons, France.
+    <br>
+    10. Sluchin, Benny and Malt, M. Mikhail. 2021. <i>John Cage's Number Pieces, a Geometric Interpretation of “Time Brackets” Notation.</i> In: Kronland-Martinet, R., Ystad, S., Aramaki, M. (eds) Perception, Representations, Image, Sound, Music. CMMR 2019. Lecture Notes in Computer Science(), vol 12631. Springer, Cham.
+     <a href="https://doi.org/10.1007/978-3-030-70210-6_9">available here</a>
+    </p>
 		</center>
+
 	</div>
 	<div style="float:left; width: 15%; background-color:#FFFFFF;">
 		&nbsp;
 	</div>
 	</body>
-	
-<!-- ################## THIS SCRIPT HANDLES THE PROBABILITY DISTRIBUTION SELECTOR -->    
+
+<!-- ################## THIS SCRIPT HANDLES THE PROBABILITY DISTRIBUTION SELECTOR -->
 
 	<script>
-    
+
         var rectX = 20;
         var rectY = 20;
         var rectW = 100;
         var rectH = 100;
-        
+
         d3.select("#selectRect").attr("x",rectX).attr("y",rectY).attr("width",rectW).attr("height",rectH);
         d3.select("#circle_st").attr("cx",rectX+0.2*rectW).attr("cy",rectY+rectH);
         d3.select("#circle_et").attr("cx",rectX+0.8*rectW).attr("cy",rectY+rectH);
-        
+
         d3.select("#sigmaLegend").attr("x",rectX-15).attr("y",rectY);
         d3.select("#muLegend").attr("x",rectX+rectW).attr("y",rectY+rectH+15);
-        
+
         var startLine_x1 = 150;
         var startLine_x2 = 340;
         var startLine_y = rectY+rectH-25;
@@ -196,41 +331,41 @@
         var endLine_x2 = 450;
         var endLine_y = rectY+rectH-20;
         d3.select("#endLine").attr("x1",endLine_x1).attr("x2",endLine_x2).attr("y1",endLine_y).attr("y2",endLine_y);
-        
+
         d3.select("#startLineLegend").attr("x",startLine_x1-16).attr("y",startLine_y+11);
         d3.select("#endLineLegend").attr("x",endLine_x2-80).attr("y",endLine_y+11);
-	
+
 		const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
-		
+
 		function dragged() {
             var current = d3.select(this);
 			var nx = clamp(d3.event.x,rectX,rectX+rectW);
 			var ny = clamp(d3.event.y,rectY,rectY+rectH);
             current.attr('cx', nx).attr('cy', ny);
-			
+
 			redraw_functions();
         }
-		
+
 		let start_time_function = d3.line()
 		.x(d => startLine_x1+(startLine_x2-startLine_x1)*d[0])
 		.y(d => startLine_y-50*d[1]);
-		
+
 		let end_time_function = d3.line()
 		.x(d => endLine_x1+(endLine_x2-endLine_x1)*d[0])
 		.y(d => endLine_y-50*d[1]);
-		
+
 		function redraw_functions() {
 			var st_cx = d3.select("#circle_st").attr("cx");
 			var st_cy = d3.select("#circle_st").attr("cy");
 			var et_cx = d3.select("#circle_et").attr("cx");
 			var et_cy = d3.select("#circle_et").attr("cy");
-			
+
 			var st_m = (st_cx-rectX)/100.0;
 			var et_m = (et_cx-rectX)/100.0;
 			var st_sigma = Math.pow(10,-2+4*(st_cy-rectY)/100.0);
 			var et_sigma = Math.pow(10,-2+4*(et_cy-rectY)/100.0);
-			
+
 			var st_distrib=[];
 			var et_distrib=[];
 			for (let i = 0; i <= 100; i++) {
@@ -240,41 +375,41 @@
 				yTemp = Math.exp(-(xTemp-et_m)*(xTemp-et_m)/et_sigma);
 				et_distrib.push([xTemp, yTemp]);
 			}
-			
+
 			d3.select("#startTimeFunc")
-				.datum(st_distrib) 
+				.datum(st_distrib)
 				.attr('fill', 'none')
 				.attr('stroke', 'rgb(48,105,152,0.7)')
 				.attr('stroke-width', 2)
 				.attr('d', start_time_function);
 
 			d3.select("#endTimeFunc")
-				.datum(et_distrib) 
+				.datum(et_distrib)
 				.attr('fill', 'none')
 				.attr('stroke', 'rgb(255, 212, 59,0.7)')
 				.attr('stroke-width', 2)
 				.attr('d', end_time_function);
 		}
-		
+
 		var dragHandler = d3.drag().on("drag",dragged);
 		dragHandler(d3.select("#circle_st"))
 		dragHandler(d3.select("#circle_et"))
-		
+
 		redraw_functions();
-	</script>	
-	
-<!-- ################## THIS SCRIPT HANDLES THE AUDIO PART -->    
-	
+	</script>
+
+<!-- ################## THIS SCRIPT HANDLES THE AUDIO PART -->
+
 	<script>
 	////////////// AUDIO INIT
-	
+
 		var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
 		var audioContext = new AudioContextFunc();
 		var player=new WebAudioFontPlayer();
-        
+
         var timerInterval;
         var timer_Seconds;
-		
+
 		player.loader.decodeAfterLoading(audioContext, '_five5_cl_sf2');
 		player.loader.decodeAfterLoading(audioContext, '_five5_clbass_sf2');
 		player.loader.decodeAfterLoading(audioContext, '_five5_fl_sf2');
@@ -284,7 +419,7 @@
 		function startWaveTableNow(pitch,time,duration,instrument) {
 			var x = player.queueWaveTable(audioContext, audioContext.destination, instrument, audioContext.currentTime + time, pitch, duration);
 		}
-        
+
         function timerDisplay() {
             timer_Seconds+=1;
             var secs = timer_Seconds%60;
@@ -294,20 +429,20 @@
                 stop_score();
             }
         }
-        
+
         function stop_score() {
             player.cancelQueue(audioContext);
             clearInterval(timerInterval);
             d3.select("#timerDisplayText").html("-'--''");
         }
-		
+
 		function play_score() {
             stop_score();
-            
+
             timer_Seconds=0;
             d3.select("#timerDisplayText").html("0'00''");
             timerInterval = setInterval(timerDisplay, 1000)
-            
+
 			for (var i=0;i<DATA_NP.players.length;i++) {
 				var name = DATA_NP.players[i].name;
 				for (var j=0;j<DATA_NP.players[i].realization.length;j++) {
@@ -315,7 +450,7 @@
 					pc = timebracket[0];
 					start_time = timebracket[1];
 					duration = timebracket[2]-timebracket[1];
-					
+
 					switch (name) {
 						case 'Flute':
 							startWaveTableNow(pc,start_time,duration,_five5_fl_sf2);
@@ -337,14 +472,14 @@
 			}
 		}
 	////////////// NUMBER PIECES ALGOS
-    
+
         var FLAG_SCORE = false;
-	
+
 		function pick_time(t1,t2,type) {
             // We access the parameters of the distribution in the selector
             // depending on whether we are selecting a starting time or
             // an ending time
-            
+
             switch (type) {
                 case "start":
                     var x = d3.select("#circle_st").attr("cx");
@@ -355,21 +490,21 @@
                     var y = d3.select("#circle_et").attr("cy");
                     break;
             }
-			
+
 			var mu = (x-rectX)/100.0;
 			var sigma = Math.pow(10,-2+4*(y-rectY)/100.0);
-            
+
             var random_x = Math.random();
             var h = Math.exp(-(random_x-mu)*(random_x-mu)/sigma);;
-            
+
             while (Math.random()>h) {
                 var random_x = Math.random();
                 var h = Math.exp(-(random_x-mu)*(random_x-mu)/sigma);;
             }
-        
+
 			return t1+random_x*(t2-t1);
 		}
-	
+
 		function choose_tb(tb_limits,t_prec) {
 			if (t_prec>tb_limits[0])
 				var st = pick_time(t_prec,tb_limits[1],"start")
@@ -383,14 +518,14 @@
 
 			return [st,et]
 		}
-	
-		function choose_score() {	
+
+		function choose_score() {
             FLAG_SCORE = true;
 			for (var i=0;i<DATA_NP.players.length;i++) {
 				var timebrackets = DATA_NP.players[i].timebrackets;
 				var data__player = [];
 				var t_prec = 0;
-				
+
 				for (var tb_idx=0;tb_idx<timebrackets.length;tb_idx++) {
 					if (t_prec<timebrackets[tb_idx]["limits"][1])
 						tb_real = choose_tb(timebrackets[tb_idx]["limits"],t_prec);
@@ -406,24 +541,24 @@
 
 		////////////// DRAWING STUFF
 
-	
+
 		var HEIGHT_BARS = 32;
 		var scaleX = 3.2;
 		var heibar_str = HEIGHT_BARS.toString();
         var OFFSET_SCORE = 120;
-        
+
         for (var i=0;i<6;i++) {
             d3.select("#mark"+(i.toString())).attr("x",OFFSET_SCORE+i*60*scaleX-8).attr("y",390);
             d3.select("#lineMark"+(i.toString())).attr("x1",OFFSET_SCORE+i*60*scaleX)
                                                   .attr("x2",OFFSET_SCORE+i*60*scaleX)
                                                   .attr("y1",380).attr("y2",370);
         }
-	
+
 		function draw_numberpiece () {
-		
+
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 			////// This whole piece of code instantiates elements of the score for the first time
-		
+
 			var g_vars = d3.select("#score_rep").selectAll("g").data(DATA_NP.players).enter().append("g")
 						   .attr("fill","black")
 						   .attr("transform",function(d,i) { return "translate("+OFFSET_SCORE.toString()+" "+(i*80).toString()+")";})
@@ -456,13 +591,13 @@
 							else
 								return "fill:rgb(255, 212, 59); fill-opacity:0.3; stroke: gray;";
 						});
-						
+
 			var g_reals = g_vars.selectAll("line").data(function(d) {return d.realization;});
 			g_reals.enter().append("line");
-			
+
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 			////// Now we reselect everything in case the realization has changed
-			
+
 			d3.select("#score_rep").selectAll("g").data(DATA_NP.players).selectAll("line").data(function(d) {return d.realization;})
 					.attr("x1",function(d) {return scaleX*d[1];})
 					.attr("x2",function(d) {return scaleX*d[2];})
@@ -475,11 +610,11 @@
                                 return "fill:purple; stroke:purple; stroke-width:4;"
                             }
                          );
-								
+
 		}
-		
+
 		////// Actually draw the Number Piece
 		draw_numberpiece();
-		
+
 	</script>
 </html>
