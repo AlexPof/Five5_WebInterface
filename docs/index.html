@@ -1,0 +1,485 @@
+<html>
+    <head>
+	<style>
+	html {
+		font-size: 16px;
+		line-height: 1.6em;
+		font-family: "Segoe UI", sans-serif;
+		text-align: justify;
+	}
+    
+    h1 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+	p {
+	color: rgb(0,0,0,0.8);
+	}
+    
+    .divseparator {
+      background-color: rgb(0,0,0,0.3);
+      height:2px;
+     }
+    
+    .mybutton {
+      background-color: rgb(100,100,100,1);
+      border: none;
+      border-radius:6px;
+      color: white;
+      padding: 12px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    .mybutton:active {
+        background-color: rgb(3,3,56,1);
+    }
+	</style>
+		<script src="https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js"></script>
+		<script src="five5_percu_sf2.js"></script>
+		<script src="five5_fl_sf2.js"></script>
+		<script src="five5_clbass_sf2.js"></script>
+		<script src="five5_cl_sf2.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+		<script>
+		var DATA_NP = {
+	"players": [
+	{"name":"Flute","timebrackets":[
+									{"contents":63,"limits":[0,30,20,50]},
+									{"contents":73,"limits":[40,70,60,90]},
+									{"contents":67,"limits":[80,110,100,130]},
+									{"contents":84,"limits":[125,140,135,150]},
+									{"contents":72,"limits":[135,180,165,210]},
+									{"contents":66,"limits":[195,240,225,270]},
+									{"contents":80,"limits":[275,290,285,300]}
+									],
+					"realization":[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+									},
+	{"name":"Clarinet 1","timebrackets":[
+									{"contents":65,"limits":[0,30,20,50]},
+									{"contents":73,"limits":[40,70,60,90]},
+									{"contents":78,"limits":[75,120,105,150]},
+									{"contents":59,"limits":[165,210,195,240]},
+									{"contents":83,"limits":[225,270,255,300]}
+									],
+						"realization":[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+									},
+	{"name":"Clarinet 2","timebrackets":[
+									{"contents":77,"limits":[0,45,30,75]},
+									{"contents":69,"limits":[60,105,90,135]},
+									{"contents":82,"limits":[150,180,170,200]},
+									{"contents":66,"limits":[195,210,205,220]},
+									{"contents":55,"limits":[210,240,230,260]},
+									{"contents":75,"limits":[250,280,270,300]}
+									],
+							"realization":[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+									},
+	{"name":"Bass Clarinet","timebrackets":[
+									{"contents":49,"limits":[0,45,30,75]},
+									{"contents":50,"limits":[65,95,85,115]},
+									{"contents":53,"limits":[100,145,141,175]},
+									{"contents":52,"limits":[170,185,180,195]},
+									{"contents":49,"limits":[185,230,215,260]},
+									{"contents":47,"limits":[250,280,270,300]}
+									],
+							"realization":[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+									},
+	{"name":"Percussion","timebrackets":[
+									{"contents":60,"limits":[0,15,10,25]},
+									{"contents":71,"limits":[45,90,75,120]},
+									{"contents":67,"limits":[105,150,135,180]},
+									{"contents":72,"limits":[175,190,185,200]},
+									{"contents":64,"limits":[195,210,205,220]},
+									{"contents":64,"limits":[210,240,230,260]},
+									{"contents":72,"limits":[250,280,270,300]}
+									],
+							"realization":[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+									}
+	]
+};
+		
+		</script>
+    </head>
+	
+    <body>
+	<div style="float:left; width: 15%; background-color:#FFFFFF;">
+		&nbsp;
+	</div>
+	<div style="float:left; width: 70%; background-color:#FFFFFF;">
+		<h1>
+            John Cage's Five<sup>5</sup>: a Javascript-aided Interpretation Interface
+		</h1>
+        <div class="divseparator">
+        </div>
+		<p>
+            <svg width="100%" viewBox="0 0 1100 400" preserveAspectRatio="xMinYMin meet" id="score_rep">
+                <marker id="markerCircle" markerWidth="6" markerHeight="6" refX="5" refY="5">
+                    <circle cx="5" cy="5" r="1" style="stroke: none; fill:#000000;"/>
+                </marker>
+                <line id="lineMark0" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <line id="lineMark1" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <line id="lineMark2" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <line id="lineMark3" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <line id="lineMark4" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <line id="lineMark5" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                <text id="mark0" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">0'00</text>
+                <text id="mark1" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">1'00</text>
+                <text id="mark2" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">2'00</text>
+                <text id="mark3" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">3'00</text>
+                <text id="mark4" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">4'00</text>
+                <text id="mark5" font-size="11px" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">5'00</text>
+            </svg>
+		</p>
+        <p>
+        <div style="min-height: 100px; overflow: hidden; width: 100%;background-color:#FFFFFF;">
+            <div style="float:left; width: 70%; background-color:#FFFFFF;">
+                <svg viewBox="0 0 600 150" preserveAspectRatio="xMinYMin meet" id="function_select">
+                    <text id="sigmaLegend" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">σ</text>
+                    <text id="muLegend" font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">μ</text>
+                    <rect id="selectRect" stroke="rgb(0,0,0,0.8)" fill="rgb(0,0,0,0.05)"/>
+                    <circle id="circle_st" r="6" stroke="rgb(0,0,0,0.8)" fill="rgb(48,105,152,0.7)"/>
+                    <circle id="circle_et" r="6" stroke="rgb(0,0,0,0.8)" fill="rgb(255, 212, 59,0.7)"/>
+                    
+                    <text id="startLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Starting time period</text>
+                    <text id="endLineLegend" font-size="11px"  font-family="Arial, Helvetica, sans-serif" fill="rgb(0,0,0,0.7)">Ending time period</text>
+                    <line id="startLine" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                    <line id="endLine" stroke="rgb(0,0,0,0.8)" fill="none"/>
+                    <path id="startTimeFunc"></path>
+                    <path id="endTimeFunc"></path>
+                </svg>
+            </div>
+            <div style="float:right; width: 30%; background-color:#FFFFFF;">
+                <center>
+                <button class="mybutton" onClick="choose_score();">Generate score</button>
+                <br>
+                <button class="mybutton" onClick="play_score();">Play</button>
+                <button class="mybutton" onClick="stop_score();">Stop</button><p id="timerDisplayText" style="color:rgb(0,0,0,0.7); font-weight:bold; font-size:20px">-'--''</p>
+                </center>
+            </div>
+        </div>
+		</p>
+		<p>
+		It would be very convenient if the individual neurons of artificial neural networks corresponded to cleanly interpretable features of the input. For example, in an “ideal” ImageNet classifier, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout. Empirically, in models we have studied, some of the neurons do cleanly map to features. But it isn't always the case that features correspond so cleanly to neurons, especially in large language models where it actually seems rare for neurons to correspond to clean features. This brings up many questions. Why is it that neurons sometimes align with features and sometimes don't? Why do some models and tasks have many of these clean neurons, while they're vanishingly rare in others?
+		</p>
+		</center>
+	</div>
+	<div style="float:left; width: 15%; background-color:#FFFFFF;">
+		&nbsp;
+	</div>
+	</body>
+	
+<!-- ################## THIS SCRIPT HANDLES THE PROBABILITY DISTRIBUTION SELECTOR -->    
+
+	<script>
+    
+        var rectX = 20;
+        var rectY = 20;
+        var rectW = 100;
+        var rectH = 100;
+        
+        d3.select("#selectRect").attr("x",rectX).attr("y",rectY).attr("width",rectW).attr("height",rectH);
+        d3.select("#circle_st").attr("cx",rectX+0.2*rectW).attr("cy",rectY+rectH);
+        d3.select("#circle_et").attr("cx",rectX+0.8*rectW).attr("cy",rectY+rectH);
+        
+        d3.select("#sigmaLegend").attr("x",rectX-15).attr("y",rectY);
+        d3.select("#muLegend").attr("x",rectX+rectW).attr("y",rectY+rectH+15);
+        
+        var startLine_x1 = 150;
+        var startLine_x2 = 340;
+        var startLine_y = rectY+rectH-25;
+        d3.select("#startLine").attr("x1",startLine_x1).attr("x2",startLine_x2).attr("y1",startLine_y).attr("y2",startLine_y);
+        var endLine_x1 = 260;
+        var endLine_x2 = 450;
+        var endLine_y = rectY+rectH-20;
+        d3.select("#endLine").attr("x1",endLine_x1).attr("x2",endLine_x2).attr("y1",endLine_y).attr("y2",endLine_y);
+        
+        d3.select("#startLineLegend").attr("x",startLine_x1-16).attr("y",startLine_y+11);
+        d3.select("#endLineLegend").attr("x",endLine_x2-80).attr("y",endLine_y+11);
+	
+		const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+		
+		function dragged() {
+            var current = d3.select(this);
+			var nx = clamp(d3.event.x,rectX,rectX+rectW);
+			var ny = clamp(d3.event.y,rectY,rectY+rectH);
+            current.attr('cx', nx).attr('cy', ny);
+			
+			redraw_functions();
+        }
+		
+		let start_time_function = d3.line()
+		.x(d => startLine_x1+(startLine_x2-startLine_x1)*d[0])
+		.y(d => startLine_y-50*d[1]);
+		
+		let end_time_function = d3.line()
+		.x(d => endLine_x1+(endLine_x2-endLine_x1)*d[0])
+		.y(d => endLine_y-50*d[1]);
+		
+		function redraw_functions() {
+			var st_cx = d3.select("#circle_st").attr("cx");
+			var st_cy = d3.select("#circle_st").attr("cy");
+			var et_cx = d3.select("#circle_et").attr("cx");
+			var et_cy = d3.select("#circle_et").attr("cy");
+			
+			var st_m = (st_cx-rectX)/100.0;
+			var et_m = (et_cx-rectX)/100.0;
+			var st_sigma = Math.pow(10,-2+4*(st_cy-rectY)/100.0);
+			var et_sigma = Math.pow(10,-2+4*(et_cy-rectY)/100.0);
+			
+			var st_distrib=[];
+			var et_distrib=[];
+			for (let i = 0; i <= 100; i++) {
+				xTemp = i/100.0;
+				yTemp = Math.exp(-(xTemp-st_m)*(xTemp-st_m)/st_sigma);
+				st_distrib.push([xTemp, yTemp]);
+				yTemp = Math.exp(-(xTemp-et_m)*(xTemp-et_m)/et_sigma);
+				et_distrib.push([xTemp, yTemp]);
+			}
+			
+			d3.select("#startTimeFunc")
+				.datum(st_distrib) 
+				.attr('fill', 'none')
+				.attr('stroke', 'rgb(48,105,152,0.7)')
+				.attr('stroke-width', 2)
+				.attr('d', start_time_function);
+
+			d3.select("#endTimeFunc")
+				.datum(et_distrib) 
+				.attr('fill', 'none')
+				.attr('stroke', 'rgb(255, 212, 59,0.7)')
+				.attr('stroke-width', 2)
+				.attr('d', end_time_function);
+		}
+		
+		var dragHandler = d3.drag().on("drag",dragged);
+		dragHandler(d3.select("#circle_st"))
+		dragHandler(d3.select("#circle_et"))
+		
+		redraw_functions();
+	</script>	
+	
+<!-- ################## THIS SCRIPT HANDLES THE AUDIO PART -->    
+	
+	<script>
+	////////////// AUDIO INIT
+	
+		var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+		var audioContext = new AudioContextFunc();
+		var player=new WebAudioFontPlayer();
+        
+        var timerInterval;
+        var timer_Seconds;
+		
+		player.loader.decodeAfterLoading(audioContext, '_five5_cl_sf2');
+		player.loader.decodeAfterLoading(audioContext, '_five5_clbass_sf2');
+		player.loader.decodeAfterLoading(audioContext, '_five5_fl_sf2');
+		player.loader.decodeAfterLoading(audioContext, '_five5_percu_sf2');
+
+
+		function startWaveTableNow(pitch,time,duration,instrument) {
+			var x = player.queueWaveTable(audioContext, audioContext.destination, instrument, audioContext.currentTime + time, pitch, duration);
+		}
+        
+        function timerDisplay() {
+            timer_Seconds+=1;
+            var secs = timer_Seconds%60;
+            var mins = (timer_Seconds - secs) / 60;
+            d3.select("#timerDisplayText").html(mins.toString()+"'"+secs.toString().padStart(2, '0')+"''");
+            if (timer_Minutes==300) {
+                stop_score();
+            }
+        }
+        
+        function stop_score() {
+            player.cancelQueue(audioContext);
+            clearInterval(timerInterval);
+            d3.select("#timerDisplayText").html("-'--''");
+        }
+		
+		function play_score() {
+            stop_score();
+            
+            timer_Seconds=0;
+            d3.select("#timerDisplayText").html("0'00''");
+            timerInterval = setInterval(timerDisplay, 1000)
+            
+			for (var i=0;i<DATA_NP.players.length;i++) {
+				var name = DATA_NP.players[i].name;
+				for (var j=0;j<DATA_NP.players[i].realization.length;j++) {
+					var timebracket = DATA_NP.players[i].realization[j];
+					pc = timebracket[0];
+					start_time = timebracket[1];
+					duration = timebracket[2]-timebracket[1];
+					
+					switch (name) {
+						case 'Flute':
+							startWaveTableNow(pc,start_time,duration,_five5_fl_sf2);
+							break;
+						case 'Clarinet 1':
+							startWaveTableNow(pc,start_time,duration,_five5_cl_sf2);
+							break;
+						case 'Clarinet 2':
+							startWaveTableNow(pc,start_time,duration,_five5_cl_sf2);
+							break;
+						case 'Percussion':
+							startWaveTableNow(pc,start_time,duration,_five5_percu_sf2);
+							break;
+						case 'Bass Clarinet':
+							startWaveTableNow(pc,start_time,duration,_five5_clbass_sf2);
+							break;
+					}
+				}
+			}
+		}
+	////////////// NUMBER PIECES ALGOS
+    
+        var FLAG_SCORE = false;
+	
+		function pick_time(t1,t2,type) {
+            // We access the parameters of the distribution in the selector
+            // depending on whether we are selecting a starting time or
+            // an ending time
+            
+            switch (type) {
+                case "start":
+                    var x = d3.select("#circle_st").attr("cx");
+                    var y = d3.select("#circle_st").attr("cy");
+                    break;
+                case "end":
+                    var x = d3.select("#circle_et").attr("cx");
+                    var y = d3.select("#circle_et").attr("cy");
+                    break;
+            }
+			
+			var mu = (x-rectX)/100.0;
+			var sigma = Math.pow(10,-2+4*(y-rectY)/100.0);
+            
+            var random_x = Math.random();
+            var h = Math.exp(-(random_x-mu)*(random_x-mu)/sigma);;
+            
+            while (Math.random()>h) {
+                var random_x = Math.random();
+                var h = Math.exp(-(random_x-mu)*(random_x-mu)/sigma);;
+            }
+        
+			return t1+random_x*(t2-t1);
+		}
+	
+		function choose_tb(tb_limits,t_prec) {
+			if (t_prec>tb_limits[0])
+				var st = pick_time(t_prec,tb_limits[1],"start")
+			else
+				var st = pick_time(tb_limits[0],tb_limits[1],"start")
+
+			if (st>tb_limits[2])
+				var et = pick_time(st,tb_limits[3],"end")
+			else
+				var et = pick_time(tb_limits[2],tb_limits[3],"end")
+
+			return [st,et]
+		}
+	
+		function choose_score() {	
+            FLAG_SCORE = true;
+			for (var i=0;i<DATA_NP.players.length;i++) {
+				var timebrackets = DATA_NP.players[i].timebrackets;
+				var data__player = [];
+				var t_prec = 0;
+				
+				for (var tb_idx=0;tb_idx<timebrackets.length;tb_idx++) {
+					if (t_prec<timebrackets[tb_idx]["limits"][1])
+						tb_real = choose_tb(timebrackets[tb_idx]["limits"],t_prec);
+						var start_time = tb_real[0];
+						var end_time = tb_real[1];
+						data__player.push([timebrackets[tb_idx]["contents"],start_time,end_time])
+					t_prec = end_time
+				}
+				DATA_NP.players[i]["realization"] = data__player;
+			}
+			draw_numberpiece();
+		}
+
+		////////////// DRAWING STUFF
+
+	
+		var HEIGHT_BARS = 32;
+		var scaleX = 3.2;
+		var heibar_str = HEIGHT_BARS.toString();
+        var OFFSET_SCORE = 120;
+        
+        for (var i=0;i<6;i++) {
+            d3.select("#mark"+(i.toString())).attr("x",OFFSET_SCORE+i*60*scaleX-8).attr("y",390);
+            d3.select("#lineMark"+(i.toString())).attr("x1",OFFSET_SCORE+i*60*scaleX)
+                                                  .attr("x2",OFFSET_SCORE+i*60*scaleX)
+                                                  .attr("y1",380).attr("y2",370);
+        }
+	
+		function draw_numberpiece () {
+		
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+			////// This whole piece of code instantiates elements of the score for the first time
+		
+			var g_vars = d3.select("#score_rep").selectAll("g").data(DATA_NP.players).enter().append("g")
+						   .attr("fill","black")
+						   .attr("transform",function(d,i) { return "translate("+OFFSET_SCORE.toString()+" "+(i*80).toString()+")";})
+						   ;
+			g_vars.append("text").attr("x",-OFFSET_SCORE).attr("y",HEIGHT_BARS/2+6).html(function (d) {return d.name});
+			var g_polys = g_vars.selectAll("polygon").data(function(d) {return d.timebrackets;}).enter();
+			g_polys.append("polygon")
+				  .attr("points",function(d) {
+						if (d.limits[0]==d.limits[1])
+							return scaleX*d.limits[0].toString()+",0 "+scaleX*d.limits[2].toString()+",0 "+scaleX*d.limits[2].toString()+","+heibar_str+" "+scaleX*d.limits[0].toString()+","+heibar_str;
+						else
+							return scaleX*d.limits[0].toString()+",0 "+scaleX*d.limits[1].toString()+",0 "+scaleX*d.limits[2].toString()+","+heibar_str+" "+scaleX*d.limits[0].toString()+","+heibar_str;
+						})
+				  .attr("style",function(d) {
+							if (d.limits[0]==d.limits[1])
+								return "fill:gray; fill-opacity:0.3; stroke: gray;";
+							else
+								return "fill:rgb(48, 105, 152); fill-opacity:0.3; stroke: gray;";
+						});
+			g_polys.append("polygon")
+				  .attr("points",function(d) {
+						if (d.limits[0]==d.limits[1])
+							return scaleX*d.limits[0].toString()+",0 "+scaleX*d.limits[2].toString()+",0 "+scaleX*d.limits[2].toString()+","+HEIGHT_BARS.toString()+" "+scaleX*d.limits[0].toString()+","+HEIGHT_BARS.toString();
+						else
+							return scaleX*d.limits[2].toString()+","+HEIGHT_BARS.toString()+" "+scaleX*d.limits[3].toString()+","+HEIGHT_BARS.toString()+" "+scaleX*d.limits[3].toString()+",0 "+scaleX*d.limits[1].toString()+",0";
+						})
+				  .attr("style",function(d) {
+							if (d.limits[0]==d.limits[1])
+								return "fill:gray; fill-opacity:0.3;";
+							else
+								return "fill:rgb(255, 212, 59); fill-opacity:0.3; stroke: gray;";
+						});
+						
+			var g_reals = g_vars.selectAll("line").data(function(d) {return d.realization;});
+			g_reals.enter().append("line");
+			
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+			////// Now we reselect everything in case the realization has changed
+			
+			d3.select("#score_rep").selectAll("g").data(DATA_NP.players).selectAll("line").data(function(d) {return d.realization;})
+					.attr("x1",function(d) {return scaleX*d[1];})
+					.attr("x2",function(d) {return scaleX*d[2];})
+					.attr("y1",HEIGHT_BARS/2)
+					.attr("y2",HEIGHT_BARS/2)
+					.attr("style",function (d) {
+                            if (FLAG_SCORE)
+                                return "fill:rgb(0,0,0,0.8); stroke:rgb(0,0,0,0.8); stroke-width:4; marker-start:url(#markerCircle);marker-end:url(#markerCircle);";
+                            else
+                                return "fill:purple; stroke:purple; stroke-width:4;"
+                            }
+                         );
+								
+		}
+		
+		////// Actually draw the Number Piece
+		draw_numberpiece();
+		
+	</script>
+</html>
