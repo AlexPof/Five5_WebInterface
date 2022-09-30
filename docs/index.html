@@ -425,7 +425,7 @@
             var secs = timer_Seconds%60;
             var mins = (timer_Seconds - secs) / 60;
             d3.select("#timerDisplayText").html(mins.toString()+"'"+secs.toString().padStart(2, '0')+"''");
-            if (timer_Minutes==300) {
+            if (timer_Seconds==300) {
                 stop_score();
             }
         }
