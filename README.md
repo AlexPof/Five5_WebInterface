@@ -1,18 +1,12 @@
-# Web_ColorCubeDance
+# Five5_WebInterface
+A Javascript-based web interface for the interactive interpretation of John Cage's Five<sup>5</sup>.
 
-A web interface for composing (with) automorphisms in the 'colored Cube Dance'.
-
-Try the web interface [here !](https://alexpof.github.io/Web_ColoredCubeDance/)
-Don't forget to check the help to familiarize yourself with the interface.
+Try the web interface [here !](https://alexpof.github.io/Five5_WebInterface/).
 
 # What is it about ?
 
-The 'Colored Cube Dance' (shown below) is an algebraic extension of Douthett's and Steinbach's Cube Dance graph (see Douthett, J., Steinbach, P. “Parsimonious Graphs: A Study in Parsimony, Contextual Transformations, and Modes of Limited Transposition.” Journal of Music Theory, Vol. 42-2 (1998), pp. 241–263 for more information)
+From 1987 to 1992, John Cage wrote a series of scores named the *''Number Pieces''*, which use in almost all of them a particular time-structure, called *''time-bracket''* for determining the temporal location of sounds.
 
-![ColoredCubeDance](colored_cubedance.png)
+With these indetermined scores, performers determine the location and duration of sounds by choosing their starting and ending times according to the specific rules of the time-bracket system. The superposition of different voices each performing time-brackets creates a polyphonic landscape in constant evolution.
 
-The original parsimonious relation between major, minor, and augmented triads introduced by Douthett and Steinbach is refined using three different binary relations named U, P, and L. This defines a monoid and a corresponding action on this set of triads.
-
-We compute the full automorphism group of this corresponding action, and show that it is isomorphic to <img src="https://render.githubusercontent.com/render/math?math=({\mathbb{Z}_3}^4 \rtimes D_8) \rtimes (D_6 \times \mathbb{Z}_2)">, a group of order 7776. More information is given in our preprint published on ArXiV [https://arxiv.org/abs/2204.03022](https://arxiv.org/abs/2204.03022).
-
-This group provides a way to transform chord progressions *via* automorphisms, but its size and complexity does not make it very user-friendly. Therefore, we provide a web interface for manipulating such automorphisms. This allows mathematicians, musicians, and composers to define chord progressions and automatically transform them using these automorphisms and their successive composition (in the sense of group composition). Check out the web interface in the link above !
+We present here a javascript-based web interface for the interactive interpretation of John Cage's Five<sup>5</sup>. The starting and ending times are drawn at random according to the user-defined probability distributions inside their corresponding time intervals. Leveraging the possibilities of the Web Audio API, one can then listen to such a realization.
